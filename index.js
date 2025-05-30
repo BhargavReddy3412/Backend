@@ -1,4 +1,4 @@
-   const express = require('express');
+const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
@@ -20,9 +20,6 @@ const transporter = nodemailer.createTransport({
 
 app.post('/send-email', (req, res) => {
   const { firstName, phone, email, company, additionalInfo } = req.body;
-  console.log(firstName, phone, email, company, additionalInfo )
-  res.send("success")
-res.end()
   console.log(firstName)
   console.log(phone)
   console.log(email)
