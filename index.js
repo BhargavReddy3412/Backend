@@ -1,4 +1,4 @@
-const express = require('express');
+   const express = require('express');
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
@@ -20,7 +20,9 @@ const transporter = nodemailer.createTransport({
 
 app.post('/send-email', (req, res) => {
   const { firstName, phone, email, company, additionalInfo } = req.body;
-
+  console.log(firstName, phone, email, company, additionalInfo )
+  res.send("success")
+res.end()
   console.log(firstName)
   console.log(phone)
   console.log(email)
@@ -30,7 +32,7 @@ app.post('/send-email', (req, res) => {
   const mailOptions = {
     from: email,
     to: 'info@expodite.in',           // main recipient
-    cc: ['m.janardhan@enterpi.com','b.bhargavreddy@enterpi.com'], // cc recipients
+    cc: ['m.janardhan@enterpi.com','k.saisukumar@enterpi.com', 'pranav.shah@enterpi.com'], // cc recipients
     subject: 'New Contact Form Submission',
     text:
       `First Name: ${firstName}\n` +
@@ -53,53 +55,62 @@ app.post('/send-email', (req, res) => {
 
 
 
-app.get("/email-redirect", (req, res) => {
-  const ua = req.headers["user-agent"];
-  const email = "bhargavreddyp948@gmail.com";
-  const subject = "Inquiry";
-  const body = "Hi, I'm interested in Expodite.";
+// app.get("/email-redirect", (req, res) => {
+//   const ua = req.headers["user-agent"];
+//   const email = "bhargavreddyp948@gmail.com";
+//   const subject = "Inquiry";
+//   const body = "Hi, I'm interested in Expodite.";
 
-  const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+//   const mailto = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+//   const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-  const isMobile = /android|iphone|ipad/i.test(ua);
-  res.redirect(isMobile ? mailto : gmail);
-});
+//   const isMobile = /android|iphone|ipad/i.test(ua);
+//   res.redirect(isMobile ? mailto : gmail);
+// });
 
 
-app.get("/whatsapp-redirect", (req, res) => {
-  const ua = req.headers["user-agent"];
-  const phone = "918858857369";
-  const message = encodeURIComponent("Hello! I'm interested in Expodite and would like to know how it can help automate my export documentation.");
+// app.get("/whatsapp-redirect", (req, res) => {
+//   const ua = req.headers["user-agent"];
+//   const phone = "918858857369";
+//   const message = encodeURIComponent("Hello! I'm interested in Expodite and would like to know how it can help automate my export documentation.");
 
-  const appLink = `whatsapp://send?phone=${phone}&text=${message}`;
-  const webLink = `https://wa.me/${phone}?text=${message}`;
+//   const appLink = `whatsapp://send?phone=${phone}&text=${message}`;
+//   const webLink = `https://wa.me/${phone}?text=${message}`;
 
-  const isMobile = /android|iphone|ipad/i.test(ua);
+//   const isMobile = /android|iphone|ipad/i.test(ua);
 
-  // On mobile devices → try to open app first, fallback in frontend using timeout
-  // On desktop → always fallback to WhatsApp Web
-  if (isMobile) {
-    res.send(`
-      <html>
-        <head>
-          <title>Redirecting to WhatsApp</title>
-          <script>
-            window.location = "${appLink}";
-            setTimeout(() => {
-              window.location = "${webLink}";
-            }, 1500);
-          </script>
-        </head>
-        <body>
-          <p>Opening WhatsApp...</p>
-        </body>
-      </html>
-    `);
-  } else {
-    res.redirect(webLink);
-  }
-});
+//   // On mobile devices → try to open app first, fallback in frontend using timeout
+//   // On desktop → always fallback to WhatsApp Web
+//   if (isMobile) {
+//     res.send(`
+//       <html>
+//         <head>
+//           <title>Redirecting to WhatsApp</title>
+//           <script>
+//             window.location = "${appLink}";
+//             setTimeout(() => {
+//               window.location = "${webLink}";
+//             }, 1500);
+//           </script>
+//         </head>
+//         <body>
+//           <p>Opening WhatsApp...</p>
+//         </body>
+//       </html>
+//     `);
+//   } else {
+//     res.redirect(webLink);
+//   }
+// });
+
+
+// app.get("/call-us", (req, res) => {
+//   const phoneNumber = "+918858857369";
+//   // Redirect to tel: link (works only on mobile)
+//   res.redirect(`tel:${phoneNumber}`);
+// });
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
