@@ -57,7 +57,7 @@ res.end()
 
 // app.get("/email-redirect", (req, res) => {
 //   const ua = req.headers["user-agent"];
-//   const email = "bhargavreddyp948@gmail.com";
+//   const email = "info@expodite.in";
 //   const subject = "Inquiry";
 //   const body = "Hi, I'm interested in Expodite.";
 
