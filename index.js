@@ -22,16 +22,10 @@ const transporter = nodemailer.createTransport({
 
 app.post('/send-email', (req, res) => {
   const { firstName, phone, email, company, additionalInfo } = req.body;
-  console.log(firstName)
-  console.log(phone)
-  console.log(email)
-  console.log(company)
-  console.log(additionalInfo)
 
   const mailOptions = {
     from: email,
-    to: 'info@expodite.in',           // main recipient
-    cc: [], // cc recipients
+    to: 'info@expodite.in',
     subject: 'New Contact Form Submission',
     text:
       `First Name: ${firstName}\n` +
