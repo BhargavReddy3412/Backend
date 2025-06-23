@@ -31,7 +31,7 @@ app.post('/send-email', (req, res) => {
   const mailOptions = {
     from: email,
     to: 'info@expodite.in',           // main recipient
-    cc: ['m.janardhan@enterpi.com','k.saisukumar@enterpi.com', 'pranav.shah@enterpi.com'], // cc recipients
+    cc: [], // cc recipients
     subject: 'New Contact Form Submission',
     text:
       `First Name: ${firstName}\n` +
