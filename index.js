@@ -48,6 +48,30 @@ app.post('/send-email', (req, res) => {
 
 
 
+
+app.set('trust proxy', true);
+
+function getClientIP(req) {
+  let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
+  if (ip.includes(',')) ip = ip.split(',')[0];
+  if (ip.startsWith('::ffff:')) ip = ip.replace('::ffff:', '');
+  if (ip === '::1') ip = '127.0.0.1';
+  return ip;
+}
+
+app.post('/api/formsubmit', (req, res) => {
+  const clientIP = getClientIP(req);
+
+  console.log(`Received form from IP: ${clientIP}`);
+
+  res.json({
+    message: 'Received',
+    ipv4: clientIP,
+  });
+});
+
+
+
 // app.get("/email-redirect", (req, res) => {
 //   const ua = req.headers["user-agent"];
 //   const email = "info@expodite.in";
