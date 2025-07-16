@@ -24,6 +24,11 @@ app.post('/send-email', (req, res) => {
   // const { firstName, phone, email, company, additionalInfo } = req.body;
 
 
+  // Get client IP address
+  const ipAddress =
+    req.headers['x-forwarded-for']?.split(',')[0] || // for proxies
+    req.socket?.remoteAddress || 
+    'IP not available';
 
   const mailOptions = {
     from: email,
@@ -34,7 +39,8 @@ app.post('/send-email', (req, res) => {
       `Phone: ${phone}\n` +
       `Email: ${email}\n` +
       `Company Name: ${company}\n` +
-      `Additional Information: ${additionalInfo || 'N/A'}`,
+      `Additional Information: ${additionalInfo || 'N/A'}\n`,
+    `IP Address: ${ipAddress}`,
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
