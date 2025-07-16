@@ -23,9 +23,6 @@ const transporter = nodemailer.createTransport({
 app.post('/send-email', (req, res) => {
   // const { firstName, phone, email, company, additionalInfo } = req.body;
 
-   const ipAddress =
-    req.headers['x-forwarded-for']?.split(',')[0] ||req.socket?.remoteAddress || 
-    'IP not available';
 
 
   const mailOptions = {
@@ -38,7 +35,6 @@ app.post('/send-email', (req, res) => {
       `Email: ${email}\n` +
       `Company Name: ${company}\n` +
       `Additional Information: ${additionalInfo || 'N/A'}`,
-      `IP Address: ${ipAddress}`
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
