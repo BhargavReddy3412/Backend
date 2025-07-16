@@ -21,7 +21,12 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/send-email', (req, res) => {
-  const { firstName, phone, email, company, additionalInfo } = req.body;
+  // const { firstName, phone, email, company, additionalInfo } = req.body;
+
+   const ipAddress =
+    req.headers['x-forwarded-for']?.split(',')[0] ||req.socket?.remoteAddress || 
+    'IP not available';
+
 
   const mailOptions = {
     from: email,
@@ -33,6 +38,7 @@ app.post('/send-email', (req, res) => {
       `Email: ${email}\n` +
       `Company Name: ${company}\n` +
       `Additional Information: ${additionalInfo || 'N/A'}`,
+      `IP Address: ${ipAddress}`
   };
 
   transporter.sendMail(mailOptions, function (error, info) {
@@ -49,26 +55,26 @@ app.post('/send-email', (req, res) => {
 
 
 
-app.set('trust proxy', true);
+// app.set('trust proxy', true);
 
-function getClientIP(req) {
-  let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
-  if (ip.includes(',')) ip = ip.split(',')[0];
-  if (ip.startsWith('::ffff:')) ip = ip.replace('::ffff:', '');
-  if (ip === '::1') ip = '127.0.0.1';
-  return ip;
-}
+// function getClientIP(req) {
+//   let ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || '';
+//   if (ip.includes(',')) ip = ip.split(',')[0];
+//   if (ip.startsWith('::ffff:')) ip = ip.replace('::ffff:', '');
+//   if (ip === '::1') ip = '127.0.0.1';
+//   return ip;
+// }
 
-app.post('/api/formsubmit', (req, res) => {
-  const clientIP = getClientIP(req);
+// app.post('/api/formsubmit', (req, res) => {
+//   const clientIP = getClientIP(req);
 
-  console.log(`Received form from IP: ${clientIP}`);
+//   console.log(`Received form from IP: ${clientIP}`);
 
-  res.json({
-    message: 'Received',
-    ipv4: clientIP,
-  });
-});
+//   res.json({
+//     message: 'Received',
+//     ipv4: clientIP,
+//   });
+// });
 
 
 
