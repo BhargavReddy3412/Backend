@@ -21,11 +21,7 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/send-email', (req, res) => {
-  // const { firstName, phone, email, company, additionalInfo } = req.body;
-
-
-
-
+  const { firstName, phone, email, company, additionalInfo } = req.body;
   const mailOptions = {
     from: email,
     to: 'info@expodite.in',
